@@ -41,6 +41,8 @@ for module in $(git status | grep tex | awk '{ print $3 }'); do
 	else
 		courses="$courses, $(cat module_name)"
 	fi
+
+	cd -
 done
 git add --all
 git commit -m "Datum: $date; Vorlesungen: $courses"
