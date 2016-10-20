@@ -1,0 +1,195 @@
+%%
+% Copyright 2016 Fabian Damken
+% 
+% Licensed under the Apache License, Version 2.0 (the "License");
+% you may not use this file except in compliance with the License.
+% You may obtain a copy of the License at
+% 
+%     http://www.apache.org/licenses/LICENSE-2.0
+% 
+% Unless required by applicable law or agreed to in writing, software
+% distributed under the License is distributed on an "AS IS" BASIS,
+% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+% See the License for the specific language governing permissions and
+% limitations under the License.
+%%
+
+
+
+\documentclass[12pt]{scrreprt}
+
+\usepackage{amsfonts}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{listingsutf8}
+\usepackage{mathtools}
+
+\title{Funktionale und objektorientierte Programmierung}
+\subtitle{Mitschrift}
+\author{Fabian Damken}
+\date{\today}
+
+\setcounter{secnumdepth}{3}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+
+    \chapter{Programmierung}
+        \label{c:programmierung}
+
+        \section{Strukturmechanismen}
+            \label{s:programmierung_strukt}
+
+            \begin{itemize}
+                \item
+                    Primitive Ausdrücke
+                    \begin{itemize}
+                        \item Zahlen (selbstauswertend)
+                        \item Boolsche Werte (selbstauswertend)
+                        \item Eingebaute Prozeduren (bspw. \texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, ...)
+                    \end{itemize}
+                \item Kombinationsmittel
+                \item Abstraktionsmittel
+            \end{itemize}
+
+
+        \section{Programmentwicklung}
+            \label{s:programmierung_entwicklung}
+
+            \begin{enumerate}
+                \item Zweck verstehen.
+                \item Beispiel ausdenken.
+                \item Implementieren.
+                \item Testen.
+            \end{enumerate}
+
+
+    \chapter{DrRacket}
+        \label{c:drracket}
+
+        \section{Strukturmechanismen}
+            \label{s:drracket_struktur}
+
+            \subsection{Primitive Sprachelemente}
+                \label{ss:drracket_struktur_primitive}
+
+                \begin{itemize}
+                    \item Ganze Zahlen [bspw. \texttt{3}]
+                    \item Endliche Dezimalzahlen (Punkt statt Komma) [bspw. \texttt{2.3}]
+                    \item Brücke (ohne Leerzeichen) [bspw. \texttt{7/3}]
+                    \item Unendliche Zahlen ohne Periode (beginnend mit \texttt{\#i}) [bspw. \texttt{\#i2.718}]
+                \end{itemize}
+
+
+            \subsection{Kombinationsmittel}
+                \label{ss:drracket_struktur_kombination}
+
+                Kombinationen werden in DrRacket mit Hilfe der Präfixdarstellung dargestellt. Das heißt dass der gesamte Ausdruck in Klammern gefasst wird, erst der Operator und dann mögliche Operanden getrennt mit einem Leerzeichen.
+
+                Beispiele:
+                \begin{itemize}
+                    \item \texttt{(+ 2 3)}
+                    \item \texttt{(+ 4 (* 2 3))}
+                \end{itemize}
+
+                Kombination $ \iff $ Prozedur
+
+
+            \subsection{Abstraktionsmittel}
+                \label{ss:drracket_struktur_abstraktion}
+
+                \begin{enumerate}
+                    \item Erstellen einer komplexen Sache.
+                    \item Benennung der komplexen Sache.
+                    \item Nutzung als primitive Sache.
+                \end{enumerate}
+
+                Beispiele:
+                \begin{itemize}
+                    \item \texttt{(define score (+ 27 3))}
+                    \item \texttt{(define PI 3.1415)}
+                \end{itemize}
+
+
+            \subsection{Auswertungsregeln}
+                \label{ss:drracket_struktur_auswertung}
+
+                \begin{itemize}
+                    \item Selbstauswertend (self-rule) [bspw. \texttt{2}, \texttt{true}]
+                    \item Eingebauter Operator [bspw. \texttt{+}, \texttt{*}]
+                    \item Name/Variablen (name-rule)
+                    \item
+                        Kombination [bspw. \texttt{(+ 2 3)}]
+                        \begin{enumerate}
+                            \item Werte Unserausdrücke aus.
+                            \item Wende die Prozedur an. [Beispiel: \texttt{(+ 4 (* 2 3)) = (+ 4 6) = 10}]
+                        \end{enumerate}
+                    \item Sonderformen
+                \end{itemize}
+
+
+            \subsection{define - Regel}
+                \label{ss:drracket_struktur_define}
+
+                \begin{itemize}
+                    \item Operand 1 $ \coloneqq $ Name
+                    \item Operand 2 $ \coloneqq $ Wert
+                    \item Wertet nur den Wert aus.
+                    \item Der Wert wird an den Namen gebunden.
+                    \item Kein Rückgabewert.
+                \end{itemize}
+
+
+            \subsection{Prozeduren}
+                \label{ss:drracket_struktur_prozeduren}
+
+                \subsubsection{Kreisfläche}
+                    \label{sss:drracket_struktur_prozeduren_kreisflaeche}
+
+                    Berechnet die Fläche eines Rings.
+
+                    \textbf{Definition:} \texttt{(define (area-of-disk r) (* 3.14 (* r r)))}
+
+                    \textbf{Nutzung:} \texttt{(area-of-disk 5) = 78.5}
+
+
+                \subsubsection{Ringfläche}
+                    \label{sss:drracket_struktur_prozeduren_ringflaeche}
+
+                    Berechnet die Fläche eines Rings durch die Subtraktion der Fläche des Innenrings von der Fläche des Außenrings.
+
+                    \textbf{Definition:} \texttt{(define (area-of-ring outer inner) (- (area-of-disk outer) (area-of-disk inner)))}
+
+                    \textbf{Nutzung:} \texttt{(area-of-ring 5 3) = 50.24}
+
+
+        \section{Programmentwicklung}
+            \label{s:drracket_entwicklung}
+
+            \subsection{Zweck verstehen}
+                \label{ss:drracket_entwicklung_zweck}
+
+                \begin{lstlisting}
+;; Funktionsname :: Parametertypen -> Ergebnistyp
+;; Kurze Beschreibung.
+(define ...)
+                \end{lstlisting}
+
+            \subsection{Beispiel ausdenken}
+                \label{ss:drracket_entwicklung_beispiel}
+
+                \begin{lstlisting}
+;; Beispiel: (Funktionsname Beispielparameter) = Beispielergebnis
+                \end{lstlisting}
+
+            \subsection{Testen}
+                \label{ss:drracket_entwicklung_testen}
+
+                \begin{itemize}
+                    \item \texttt{(check-expect test expected)} - Prüfung auf exakte Gleichheit.
+                    \item \texttt{(check-within test expected delta)} - Prüfung auf ungefähre Gleichheit in dem gegebenen Toleranzramen (delta).
+                    \item \texttt{(check-error test message)} - Prüfung auf das Auslösen eines Fehlers.
+                \end{itemize}
+\end{document}
