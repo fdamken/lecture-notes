@@ -29,6 +29,8 @@
 \author{Fabian Damken}
 \date{\today}
 
+\newcommand{\qed}{\begin{flushright}q.e.d.\end{flushright}}
+
 \begin{document}
     \maketitle
     \tableofcontents
@@ -142,6 +144,29 @@ f       & f     & w             & w             & f             & f             
                 \end{itemize}
 
 
+            \subsection{de'Morganschen Regeln}
+                \label{ss:grundbegriffe_mengen_demorgan}
+
+                \begin{itemize}
+                    \item $ (A \cup B) ^ \mathsf{c} = A ^ \mathsf{c} \cap B ^ \mathsf{c} $
+                \end{itemize}
+
+
+            \subsection{Kardinalität}
+                \label{ss:grundbegriffe_mengen_kradinalitaet}
+
+                Seien $ A $ und $ B $ endliche Mengen.
+
+                Anzahl der Elemente (Kardinalität): $ \vert A \vert $
+
+                \begin{itemize}
+                    \item $ \vert A \cup B \vert = \vert A \vert + \vert B \vert - \vert A \cap B \vert $
+                    \item $ \vert A \times B \vert = \vert A \vert * \vert B \vert $
+                \end{itemize}
+
+                $ \vert A \cup B \vert = \vert A \vert + \vert B \vert $ wenn $ A \cap B = \emptyset $
+
+
             \subsection{Operationen}
                 \label{ss:grundbegriffe_mengen_operationen}
 
@@ -161,4 +186,193 @@ f       & f     & w             & w             & f             & f             
                         \item $ P(V _ w) = V _ (w + 1) $
                     \end{itemize}
                 \end{itemize}
+
+
+            \subsection{Obere/Untere Schranken}
+                \label{ss:grundbegriffe_mengen_schranken}
+
+                \begin{itemize}
+                    \item[Obere Schranken:] $ OS(Y) = \{ x \in X : \forall y \in Y : x \geq y \} $
+                    \item[Untere Schranken:] $ US(Y) = \{ x \in X : \forall y \in Y : x \leq y \} $
+                \end{itemize}
+
+                \begin{itemize}
+                    \item[Supremum:] Das kleinste Element von $ OS(Y) $ $ \iff sup(Y) $.
+                    \item[Infimum:] Das größte Element von $ US(X) $ $ \iff inf(Y) $.
+                \end{itemize}
+
+
+                \subsubsection{Beispiel}
+                    $ \mathbb{Q} ^ \mathsf{+} = \{ x \in \mathbb{Q} : 0 < x \} $
+
+                    \begin{itemize}
+                        \item[Supremum:] Nicht vorhanden.
+                        \item[Infimum:] $ US(\mathbb{Q} ^ \mathsf{+}) = \{ x \in \mathbb{Q} : x \leq 0 \} \implies inf(\mathbb{Q} ^ \mathsf{+}) = 0 $
+                    \end{itemize}
+
+
+            \subsection{Relationen}
+                \label{ss:grundbegriffe_mengen_relationen}
+
+                $ R \subseteq A _ 1 \times ... \times A _ n $
+
+                \subsubsection{Relationen von identischen Mengen}
+
+                    $ A ^ n = A \times ... \times A $ ($ n $ mal)
+
+                    Für $ n = 2 $ kann die Infixnotation verwendet werden, das heißt $ xRy \iff (x, y) \in R $.
+
+
+                \subsubsection{Definition von kleiner-gleich}
+
+                    $ \leq = \{ (n, m) \if \mathbb{N} ^ 2 : n \leq m \} $
+
+
+                \subsubsection{Eigenschaften}
+                    \label{sss:grundbegriffe_mengen_relationen_eigenschaften}
+
+                    \begin{itemize}
+                        \item[Reflexivität] $ \forall x \in M : xRx $
+                        \item[Symmetrie] $ xRy \implies yRx $
+                        \item[Transivität] $ xRy \land yRz \implies xRz $
+                        \item[Antisymmetrie] $ xRy \land yRx \implies x = y $
+                    \end{itemize}
+
+                    \begin{itemize}
+                        \item R ist eine Äquivalenzrelation $ \iff $ R reflexiv, transitiv und symmetrisch
+                        \item R ist eine partitielle Ordnung $ \iff $ R reflexiv, transitiv, antisymmetrisch
+                        \item R ist total $ \iff $ $ \forall x y \in M : xRy \lor yRx $
+                    \end{itemize}
+
+
+            \subsection{Ordnungsrelationen}
+                \label{ss:grundbegriffe_mengen_ordnungensrelationen}
+
+                \subsubsection{Ordnungstypen}
+                    \label{sss:grundbegriffe_mengen_ordnungensrelationen_typen}
+
+                    p.O. $ \coloneqq $ partielle Ordnung
+
+                    \begin{itemize}
+                        \item \textbf{Totale Ordnung:} Jedes Element ist mit jedem anderen vergleichbar.
+                        \item \textbf{Partielle Ordnung:} Nicht jedes Element ist nicht mit jedem anderen vergleichbar.
+                    \end{itemize}
+
+
+                \subsubsection{Ordnungsäquivalenz}
+                    \label{sss:grundbegriffe_mengen_ordnungensrelationen_aequivalenz}
+
+                    $ (x, R) $ p.O. $ y \subseteq x \implies (y, R \cap (y \times x)) $ p.O.
+
+                    \begin{itemize}
+                        \item $ x \geq y \iff y \leq x $
+                        \item $ x > y \iff x \geq y \land x \neq y \iff x \geq y \land \lnot (x = y) $
+                        \item $ x < y \iff y > x $
+                    \end{itemize}
+
+
+                \subsubsection{Extreme}
+                    \label{sss:grundbegriffe_mengen_ordnungensrelationen_extreme}
+
+                    $ (x, \leq) $ p.O. $ y \subseteq x $
+
+                    \begin{itemize}
+                        \item $ g \in X $ größtes Element von $ X $ $ \iff \forall x \in X : x \leq g $
+                        \item $ k \in X $ kleinstes Element von $ X $ $ \iff \forall x \in X : x \geq k $
+                    \end{itemize}
+
+                    Größe Elemente sind immer eindeutig.
+
+                    \paragraph{Beweis}
+                        Die größten Elemente sind immer eindeutig.
+
+                        Seien $ g $ und $ g' $ die größten Elemente.
+                        $ \implies g \leq g' \land g' \leq g \implies g = g $
+
+                        \qed
+
+
+            \subsection{Große Vereinigung/Schittmenge / Leere Menge}
+                \label{ss:grundbegriffe_mengen_grosseVerSchn}
+
+                \subsubsection{Allgemein}
+
+                    Allgemein gilt für Teilmengen von Potenzmengen $ Y \subseteq P(M) $:
+                    \begin{itemize}
+                        \item $ sup(Y) = \bigcup Y = \bigcup\limits _ { A \in Y } A $
+                        \item $ inf(Y) = \bigcap Y = \bigcap\limits _ { A \in Y } A $
+                    \end{itemize}
+
+
+                \subsubsection{Sonderfall}
+
+                    Für die leere Teilmenge der Potenzmenge $ Y = \emptyset $, $ Y \subseteq P(M) $ gilt:
+                    \begin{itemize}
+                        \item $ OS(\emptyset) = US(\emptyset) = P(M) $
+                        \item $ sup(Y) = \bigcup \emptyset = \emptyset $
+                        \item $ inf(Y) = \bigcap \emptyset = M $
+                    \end{itemize}
+
+
+            \subsection{Äquivalenzrelation}
+                \label{ss:grundbegriffe_mengen_aequivalenzrelationen}
+
+                Es gilt $ a, b, c, k, l, n \in \mathbb{Z} $.
+
+                $ a \sim _ n b $ genau dann wenn $ \exists k \in \mathbb{Z} : a - b = k * n $
+
+                \paragraph{Beweis}
+                    Symmetrie
+
+                    $ a - b = k * n \implies b - a = (-k) * n $
+
+                    \qed
+
+
+                \paragraph{Beweis}
+                    Transitivität
+
+                    $ a - b = k * n $, $ b - c = l * n \implies a - c = (a - b) + (b - c) = k * n + l * n = (k + l) * n $
+
+                    \qed
+
+
+            \subsection{Äquivalenzklassen}
+                \label{ss:grundbegriffe_mengen_aequivalenzklassen}
+
+                Es gilt $ (X, R) $, $ a \in X $.
+
+                \begin{itemize}
+                    \item $ a \in X $
+                    \item $ \tilde{a} \coloneqq \{ x \in X : a \sim x \} $
+                    \item $ \tilde{a} \neq \emptyset $
+                    \item $ \bigcup \tilde{a} = X $
+                    \item $ \tilde{a} \neq \tilde{b} \implies \tilde{a} \cap \tilde{b} = \emptyset $
+                \end{itemize}
+
+                \paragraph{Beweis}
+                    $ \tilde{a} \neq \tilde{b} \implies \tilde{a} \cap \tilde{b} = \emptyset \equiv \tilde{a} \cap \tilde{b} \neq \emptyset \implies \tilde{a} = \tilde{b} $
+
+                    Sei $ c \in \tilde{a} \cap \tilde{b} $, das heißt $ cRa $ und $ cRb $, also $ a \sim b $ und somit $ \tilde{a} = \tilde{b} $ und somit $ \tilde{a} \neq \tilde{b} \implies \tilde{a} \cap \tilde{b} = \emptyset $.
+
+                    \qed
+
+
+            \subsection{Partitionen}
+                \label{ss:grundbegriffe_mengen_partitionen}
+
+                $ P \subseteq P(X) $ ist genau dann eine Partition, wenn:
+                \begin{itemize}
+                    \item $ \bigcup P = X $
+                    \item $ \forall A \in P : A \neq \emptyset $
+                    \item $ \forall S _ 1 S _ 2 \in P : S _ 1 \neq S _ 2 \implies S _ 1 \cap S _ 2 = \emptyset $
+                \end{itemize}
+
+                \textbf{Äquivalenz:} $ x \sim _ p y \iff \exists S \in P : x \in A \land y \in A $
+
+                $ X _ { / _ { P } } = P $
+
+                $ x \sim _ { X _ { / _ { \sim } } } y \iff x \sim y $
+
+                $ \frac{a}{b} \sim \frac{c}{d} \iff a * b \sim c * d $
 \end{document}
