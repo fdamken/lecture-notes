@@ -20,9 +20,11 @@
 
 \usepackage{amsfonts}
 \usepackage[german]{babel}
+\usepackage{eqnarray}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{mathtools}
+\usepackage{stmaryrd}
 
 \title{Mathe 1}
 \subtitle{Mitschrift}
@@ -377,4 +379,220 @@ f       & f     & w             & w             & f             & f             
                 $ x \sim _ { X _ { / _ { \sim } } } y \iff x \sim y $
 
                 $ \frac{a}{b} \sim \frac{c}{d} \iff a * b \sim c * d $
+
+
+        \section{Abbildungen/Funktionen}
+            \label{s:grundbegriffe_funktionen}
+
+            $ f : A \rightarrow B $ gdw. $ f \subseteq A \times B $, so dass
+            \begin{itemize}
+                \item $ xfy \land xfy' \implies y = y' $
+                \item $ \forall x \in A : \exists y \in B : xfy $
+            \end{itemize}
+
+            $ f = graph(f) = \{ (x, f(x)) : x \in A \} $
+
+            \begin{itemize}
+                \item[$ C \subseteq A $] : $ f(C) = f[C] = \{ f(x) : x \in C \} $ (Bild von $ C $ unter $ f $).
+                \item[$ D \subseteq B $] : $ f ^ { -1 } (D) = f ^ { -1 } [D] = \{ x \in A : f(x) \in D \} $
+            \end{itemize}
+
+            \subsection{Umkehrfunktion (inverse Funktion)}
+                \label{ss:grundbegriffe_funktionen_umkehr}
+
+                \textbf{Vorraussetzung zur Bildung einer inversen Funktion:} Die Funktion muss bijektiv sein.
+
+                Sei $ f : A \rightarrow B $ bijektiv.
+
+                Somit gilt für die Umkehrfunktion $ f ^ { -1 } = \{ (f(x), x) : x \in A \} : B \rightarrow A $
+
+                Beziehungsweise $ R \in A \times B $, $ R ^ { -1 } = \{ (y, x) \in B \times A : xRy \} $
+
+
+            \subsection{Identitätsfunktion}
+                \label{ss:grundbegriffe_funktionen_identitaet}
+
+                Sei $ M $ eine Menge.
+
+                Für die Identitätsfunktion gilt: $ id _ M : M \rightarrow M : x \mapsto x $
+
+
+            \subsection{Notation}
+                \label{ss:grundbegriffe_funktionen_notation}
+
+                Im allgemeinen gilt $ f : A \rightarrow B : x \mapsto f(x) $. Wobei $ A $ den Definitionsbereich und $ B $ den Wertebereich darstellt.
+
+                Beispiele:
+                \begin{itemize}
+                    \item $ f : x \rightarrow x ^ 2 $
+                    \item $ add : \mathbb{R} \times \mathbb{R} : (x, y) \mapsto x + y $
+                    \item $ id _ A : A \rightarrow A : x \mapsto x $
+                    \item Sei $ A $ eine Menge und $ \sim $ eine Äquivalenzrelation auf dieser. $ \mu : A \rightarrow A _ { /\sim } : x \mapsto \tilde{x} $
+                    \item $ f : \mathbb{R} \rightarrow \mathbb{R} : x \mapsto x ^ 2 $
+                    \item $ f : \mathbb{R} \rightarrow [0, \infty) : x \mapsto x ^ 2 $
+                    \item $ f : [0, \infty) \rightarrow [0, \infty) : x \mapsto x ^ 2 $ (bijektiv) $ f ^ { -1 } : [0, \infty) \rightarrow [0, \infty) : y \mapsto \sqrt{y} $
+                    \item $ f : [1, \infty) \rightarrow (0, 1] : x \mapsto \frac{1}{x} $ (bijektiv) $ f ^ { -1 } : (0, 1] \rightarrow [1, \infty) : x \mapsto \frac{1}{x} $
+                \end{itemize}
+
+
+            \subsection{Eigenschaften}
+                \label{ss:grundbegriffe_funktionen_eigenschaften}
+
+                \begin{itemize}
+                    \item $ f $ ist injektiv, wenn $ \forall x, x' \in A : f(x) = f(x') \implies x = x' $.
+                    \item $ f $ ist surjektiv, wenn $ \forall y \in B : \exists x \in A : f(x) = y $.
+                    \item $ f $ ist bijektiv, wenn $ \forall y \in B : \exists ^ 1 x \in A : f(x) = y $.
+                \end{itemize}
+
+                Für jede Funktion $ f : A \rightarrow B $ existiert eine Funktion $ f ^ \# : A \rightarrow f[A] : x \mapsto f(x) $.
+
+
+            \subsection{Funktionskomposition}
+                \label{ss:grundbegriffe_funktionen_verkettung}
+
+                Sei $ f : A \rightarrow B $ und $ g : B \rightarrow C $
+
+                Durch die Verkettung entsteht eine neue Funktion: $ g \circ f : A \rightarrow C : x \mapsto g(f(x)) $
+
+                Außerdem gilt:
+                \begin{itemize}
+                    \item $ f ^ { -1 } \circ f = id _ A $
+                    \item $ f \circ f ^ { -1 } = id _ B $
+                \end{itemize}
+
+
+        \section{Beweisprinzipien}
+            \label{s:grundbegriffe_beweise}
+
+            \subsection{Direkter Beweis}
+                \label{ss:grundbegriffe_beweise_direkt}
+
+                Bei einem dirkten Beweis wird die Prämisse direkt bewiesen.
+
+                \subsubsection{Beispiel}
+
+                    Sind $ n, m \in \mathbb{N} $ gerade, dann ist $ n + m $ gerade.
+
+                    \paragraph{Beweis:}
+
+                        Es gilt $ n = 2 * k $ und $ m = 2 * l $, wobei $ k, l \in \mathbb{N} $. Das heißt, dass \[ n + m = 2 * k + 2 * l = 2 * (k + l) \] gerade ist.
+
+                        \qed
+
+
+            \subsection{Beweis durch Kontraposition}
+                \label{ss:grundbegriffe_beweise_kontraposition}
+
+                Anstelle von $ A \implies B $ wird $ \lnot B \implies \lnot A $ bewiesen.
+
+                \subsubsection{Beispiel}
+
+                    Gilt für $ n \in \mathbb{N} $, dass $ n ^ 2 $ gerade ist, ist $ n $ gerade.
+
+                    \paragraph{Beweis:}
+
+                        Der Beweis wird über $ n $ ungerade $ \implies n ^ 2 $ ungerade geführt.
+
+                        Es gilt für $ k \in \mathbb{N} $, dass $ n = 2 * k + 1 $. Somit gilt dass \[ n ^ 2 = (2 * k + 1) ^ 2 = 4 * k ^ 2 + 4 * k + 1 = 2 * (2 * k ^ 2 + 2 * k) + 1 \] ungerade ist.
+
+                        Daraus folgt dass $ n $ ungerade $ \iff n ^ 2 $ ungerade und $ n $ gerade $ \iff n ^ 2 $ gerade.
+
+                        \qed
+
+
+            \subsection{Indirekter Beweis}
+                \label{ss:grundbegriffe_beweise_indirekt}
+
+                Anstelle von $ A \implies B $ wird $ \lnot (A \land \lnot B) $ bewiesen. Alternativ kann $ \lnot (\lnot A) $ anstelle von $ A $ bewiesen werden ($ \lnot A \implies \bot $).
+
+                \subsubsection{Beispiel}
+
+                    $ \sqrt{2} $ is irrational.
+
+                    \paragraph{Beweis:}
+
+                        Ist $ \sqrt{2} $ rational, muss \[ \sqrt{2} = \frac{n}{m} \] ($ n, m \in \mathbb{N} $) gelten wobei $ n $ und $ m $ teilerfremd sind. Somit gilt \[ 2 = \frac{n ^ 2}{m ^ 2} \] also \[ n ^ 2 = 2 * m ^ 2 \]. Somit gilt $ n ^ 2 $ gerade $ \implies $ $ n $ gerade. Daraus folgt dass \[ (2 * k) ^ 2 = n ^ 2 = 2 * m ^ 2 \]. Somit gilt $ n ^ 2 $ gerade $ \implies $ $ n $ gerade.
+
+                        $ \lightning $ $ n $ und $ m $ sollten teilerfremd sein. Somit ist $ \sqrt{2} \neq \frac{n}{m} $.
+
+                        \qed
+
+
+            \subsection{Beweis durch vollständige Induktion}
+                \label{ss:grundbegriffe_beweise_induktion}
+
+                Es wird beweisen, dass für eine \textit{Induktionshypothese} (\textit{IH}) $ A(n) $ gilt \[ (A(0) \land (\forall n \in \mathbb{N} : A(n) \implies A(n + 1))) \implies \forall n \in \mathbb{N} : A(n) \]
+                Der Beweis von $ A(0) $ wird \textit{Induktionsanfang} (\textit{IA}) genannt.
+
+                Der Beweis von $ A(n) \implies A(n + 1) $ wird \textit{Induktionsschritt} (\textit{IS}) genannt.
+
+                Es gilt: \[ A(0) \implies A(1) \implies A(2) \implies \dots \implies A(n) \]
+
+                \subsubsection{Beispiel 1}
+
+                    \[ \forall n \in \mathbb{N} : \sum _ { k = 1 } ^ n k = \frac{n * (n + 1)}{2} \]
+
+                    \paragraph{Beweis:}
+
+                        Im folgenden wird die Gaußsche Summenformel mit Hilfe der vollständigen Induktion bewiesen.
+
+                        \textbf{Induktionsanfang:} \[ A(0) = \sum _ { k = 1 } ^ 0 k = \frac{0 * (0 + 1)}{2} = 0 \]
+
+                        \textbf{Induktionsschritt:} 
+                        \begin{eqnarray*}
+                            A(n + 1) = \sum _ { k = 1 } ^ { n + 1 } = (\sum _ { k = 1 } ^ n) + (n + 1)
+                                && = \frac{n * (n + 1)}{2} + (n + 1)                                    \\
+                                && = \frac{n + (n + 1)}{2} + \frac{2 * (n + 1)}{2}                      \\
+                                && = \frac{n * (n + 1) + 2 * (n + 1)}{2}                                \\
+                                && = \frac{n ^ 2 + 3 * n + 2}{2}                                        \\
+                                && = \frac{(n + 1) * (n + 2)}{2}                                        \\
+                        \end{eqnarray*}
+
+                        \qed
+
+
+                \subsubsection{Beispiel 2}
+
+                    Für endliche Mengen $ M $ gilt $ \vert P(M) \vert = 2 ^ { \vert P(M) \vert } $, also \[ \forall n \in \mathbb{N} : \forall M ; \vert M \vert = n \implies \vert P(M) \vert = 2 ^ n \].
+
+                    \paragraph{Beweis:}
+
+                        Im folgenden wird oben genannte Prämisse mit Hilfe der vollständigen Induktion bewiesen.
+
+                        \textbf{Induktionsanfang:} \[ \vert M \vert = 0 \implies \vert P(M) \vert = 2 ^ 0 = 1 \]
+
+                        \textbf{Induktionsschritt:} Sei $ M $ eine Menge mit $ \vert M \vert = n + 1 $ wobei $ n \in \mathbb{N} $. Zu zeigen: $ \vert P(M) \vert = 2 ^ { n + 1 } = 2 * 2 ^ n $.
+
+                        Sei $ a \in M $.
+
+                        \begin{itemize}
+                            \item $ S _ 0 = \{ A \in P(M) : a \in A \} \implies \vert S _ 0 \vert = n $
+                            \item $ S _ 1 = \{ A \in P(M) : a \not\in A \} \implies \vert S _ 1 \vert = n $
+                        \end{itemize}
+
+                        \[ S _ 0 \approx P(M \setminus \{ a \}) \approx S _1 \]
+
+                        \[ \vert P(M) \vert = \vert S _ 0 \vert + \vert S _ 1 \vert = 2 * \vert P(M \setminus \{ a \}) \vert = 2 * 2 ^ n = 2 ^ { n + 1 } \]
+
+                        \qed
+
+
+
+    \chapter{Algebraische Strukturen}
+        \label{c:strukturen}
+
+        Strukturen, in denen man "`wie üblich"' rechnen kann.
+
+        \section{Rechnen in $ \mathbb{Z} $ - Primzahlen, Teiler}
+            \label{s:strukturen_rechnen}
+
+            Seien $ a, b \in \mathbb{Z} $.
+
+            \begin{itemize}
+                \item $ b \mid a \equiv \exists c \in \mathbb{Z} : b * c = a \equiv $ $ b $ teilt $ a $.
+                \item $ p \in \mathbb{N} $ ist prim $ \iff (p > 1) \land (\forall n \in \mathbb{N} : n \mid p \implies (n = 1 \lor n = p)) $
+                \item $ ggt(a, b) = max(\{ n \in \mathbb{N} : n \mid a \land n \mid b \}) $
+            \end{itemize}
+
+            Sei $ a \in \mathbb{Z} $ und $ b \in \mathbb[N*] $, dann existieren eindeutige $ q \in \mathbb{Z} $ und $ r \in \{ 0, 1, \dots, b - 1 \} $ mit $ a = q * b + r $ wobei $ q = \lfloor \frac{a}{b} \rfloor $ und $ r = a \mod b $.
 \end{document}
