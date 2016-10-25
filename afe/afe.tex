@@ -1,0 +1,212 @@
+%%
+% Copyright 2016 Fabian Damken
+% 
+% Licensed under the Apache License, Version 2.0 (the "License");
+% you may not use this file except in compliance with the License.
+% You may obtain a copy of the License at
+% 
+%     http://www.apache.org/licenses/LICENSE-2.0
+% 
+% Unless required by applicable law or agreed to in writing, software
+% distributed under the License is distributed on an "AS IS" BASIS,
+% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+% See the License for the specific language governing permissions and
+% limitations under the License.
+%%
+
+
+
+\documentclass[12pt]{scrreprt}
+
+\usepackage{amsfonts}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\title{Automaten, formale Sprachen und Entscheidbarkeit}
+\subtitle{Mitschrift}
+\author{Fabian Damken}
+\date{\today}
+
+\setcounter{secnumdepth}{3}
+
+\newcommand{\qed}{\begin{flushright}q.e.d.\end{flushright}}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+
+    \chapter{Einführung}
+        \label{c:einfuehrung}
+
+        \section{Beispiele}
+            \label{s:einfuehrung_beispiel}
+
+            \subsection{Transitionssystem: Uhr}
+                \label{ss:einfiehrung_beispiel_uhr}
+
+                In diesem Beispiel wird eine einfache Uhr modelliert.
+
+                $ h \coloneqq hour $
+
+                $ m \coloneqq minute $
+
+                \paragraph{Zustände:}
+
+                    \begin{equation}
+                        (h, m, q) =
+                        \begin{cases}
+                            h \in H = \{ 0, \dots, 23 \}        \\
+                            m \in M = \{ 0, \dots, 59 \}        \\
+                            q \in \{ SETH, SETM, NIL, ERROR \}  \\
+                        \end{cases}
+                    \end{equation}
+
+
+                \paragraph{Aktionen/Operationen:}
+
+                    $ seth, setm, +, -, set, reset $
+
+
+                \paragraph{Typische Transitionen:}
+
+                    Dies sind nur beispielhafte Transsitionen, es gibt deutlich mehr.
+
+                    $ (h, m, NIL) \xrightarrow{seth} (h, m, SETH) $
+
+                    $ (h, m, SETH) \xrightarrow{set} (h, m, NIL) $
+
+                    $ (h, m, SETH) \xrightarrow{seth} (h, m, ERROR) $
+
+                    $ (h, m, NIL) \xrightarrow{+} (h, m, ERROR) $
+
+                    $ (h, m, SETH) \xrightarrow{+} ((h + 1) mod 24, m, SETH) $
+
+                    $ (h, m, ERROR) \xrightarrow{reset} (0, 0, NIL) $
+
+
+            \subsection{Transitionssystem: Mann/Wolf/Hase/Kohl}
+                \label{ss:einfuehrung_beispiel_mwhk}
+
+                \paragraph{Zustände:}
+
+                    Die Elemente $ \{ m, w, h, k \} $ wobei
+
+                    $ m \coloneqq Mann $
+
+                    $ w \coloneqq Wolf $
+
+                    $ h \coloneqq Hase $
+
+                    $ k \coloneqq Kohl $
+
+                    sind, sind auf links/rechts verteils, symbolisiert durch $ [m, w, h, k \vert\vert], \dots, [m, w \vert\vert h, k] $.
+
+                    Dabei sind folgende Kombinationen sowohl links als auch rechts nicht erlaubt: $ [w, h] $ $ [h,k] $ $ [w, h, k] $.
+
+
+                \paragraph{Aktionen/Operationen:}
+
+                    Der Mann kann zur anderen Seite wechseln und dabei maximal ein anderes Element (Wolf, Hase, Kohl) mitnehmen.
+
+
+                \paragraph{Start/Ziel}
+
+                    Der Startzustand ist $ [m, w, h, k \vert\vert] $. Der Endzustand soll $ [\vert\vert m, w, h, k] $ sein.
+
+
+                \paragraph{Lösungsgraph}
+
+                    Der folgende Graph visualisiert alle (sinnvollen) Zustände des Transitionssystems.
+
+                    \begin{tikzpicture}[->, > = stealth', shorten >= 2pt, auto, node distance = 3.5cm, thick, main node/.style = {font = \sffamily\Large\bfseries}]]
+                        \node[main node](1){$ [m, w, h, k \vert\vert] $};
+                        \node[main node](2)[below of = 1]{$ [w, k \vert\vert m, h] $};
+                        \node[main node](3)[below of = 2]{$ [m, w, k \vert\vert h] $};
+                        \node[main node](4a)[below left of = 3]{$ [k \vert\vert m, w, h] $};
+                        \node[main node](5a)[below of = 4a]{$ [m, h, k \vert\vert w] $};
+                        \node[main node](4b)[below right of = 3]{$ [w \vert\vert m, h, k] $};
+                        \node[main node](5b)[below of = 4b]{$ [m, w, h \vert\vert k] $};
+                        \node[main node](6)[below right of = 5a]{$ [h \vert\vert m, w, k] $};
+                        \node[main node](7)[below of = 6]{$ [m, h \vert\vert w, k] $};
+                        \node[main node](8)[below of = 7]{$ [\vert\vert m, w, h, k] $};
+
+                        \path
+                            (1)
+                                edge[bend right] node {h} (2)
+                            (2)
+                                edge[bend right] node {h} (1)
+                                edge[bend right] node {O} (3)
+                            (3)
+                                edge[bend right] node {O} (2)
+                                edge[bend right] node {w} (4a)
+                                edge[bend right] node {k} (4b)
+                            (4a)
+                                edge[bend right] node {w} (3)
+                                edge[bend right] node {h} (5a)
+                            (5a)
+                                edge[bend right] node {h} (4a)
+                                edge[bend right] node {k} (6)
+                            (4b)
+                                edge[bend right] node {k} (3)
+                                edge[bend right] node {h} (5b)
+                            (5b)
+                                edge[bend right] node {h} (4b)
+                                edge[bend right] node {w} (6)
+                            (6)
+                                edge[bend right] node {k} (5a)
+                                edge[bend right] node {w} (5b)
+                                edge[bend right] node {O} (7)
+                            (7)
+                                edge[bend right] node {O} (6)
+                                edge[bend right] node {h} (8)
+                            (8)
+                                edge[bend right] node {h} (7);
+                    \end{tikzpicture}
+
+
+            \subsection{Transitionssystem: Strom von Buchstaben}
+                \label{ss:einfuehrung_beispiel_buchstabenstrom}
+
+                Sei $ \Sigma $ ein Alphabet und $ a \in \Sigma $.
+
+                Es soll ein System gefunden werden, welches bei einem laufenen Strom von Elementen aus $ \Sigma $ die Information hält, ob die Anzahl der eingetroffenen $ a $ durch $ 3 $ Teilbar ist.
+
+                \paragraph{Zustandsgraph}
+
+                    Der folgende Graph visualisiert den Ablauf der oben beschriebenen Prozedur mit Hilfe von drei Zuständen.
+
+
+                    \begin{tikzpicture}[->, > = stealth', shorten >= 2pt, auto, node distance = 3.5cm, thick, main node/.style = {circle, draw, font = \sffamily\Large\bfseries}]]
+                        \node[main node](0){$ 0 $};
+                        \node[main node](1)[below right of = 0]{$ 1 $};
+                        \node[main node](2)[below left of = 0]{$ 2 $};
+
+                        \path
+                            (0)
+                                edge[loop above] node {b} (0)
+                                edge node {a} (1)
+                            (1)
+                                edge[out = 330, in = 300, looseness = 8] node {b} (1)
+                                edge node {a} (2)
+                            (2)
+                                edge[out = 240, in = 210, looseness = 8] node {b} (2)
+                                edge node {a} (0);
+                    \end{tikzpicture}
+
+
+        \section{Alphabet}
+            \label{s:einfuehrung_alphabet}
+
+            \begin{itemize}
+                \item Ein Alphabet ist eine nicht-leere, endliche Menge $ \Sigma $.
+                \item $ a \in \Sigma $ wird als ein Buchstabe/Zeichen/Symbol bezeichnet.
+                \item Ein $ \Sigma $-Wort bezeichnet eine endlich Sequenz von Buchstaben in $ \Sigma $, $ w = a _ 1 a _ 2 \dots a _ n $ mit $ a \in \Sigma ^ * $.
+                \item $ \Sigma ^ * $ ist die Menge aller Wörter und unendlich.
+                \item $ \epsilon $ ist das leere Wort: $ \epsilon \in \Sigma ^ * $
+                \item Eine $ \Sigma $-Sprache ist eine Teilmenge $ L \subseteq \Sigma ^ * $ von $ \Sigma $-Wörtern.
+            \end{itemize}
+\end{document}
