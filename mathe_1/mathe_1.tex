@@ -18,14 +18,18 @@
 
 \documentclass[12pt]{scrreprt}
 
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 \usepackage{amsfonts}
 \usepackage[german]{babel}
+\usepackage{centernot}
 \usepackage{eqnarray}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{listingsutf8}
 \usepackage{mathtools}
 \usepackage{stmaryrd}
+\usepackage[showboxes]{textpos}
 \usepackage{tikz}
 \usetikzlibrary{arrows}
 
@@ -36,18 +40,25 @@
 
 \setcounter{secnumdepth}{3}
 
-\newcommand{\qed}{\begin{flushright}q.e.d.\end{flushright}}
+\algrenewcommand\textproc{}
+
+\newcommand{\axiom}[1]{\paragraph{Axiom:} #1\newline}
+\newcommand{\corollary}[1]{\paragraph{Korollar:} #1\newline}
+\newcommand{\lemma}[1]{\paragraph{Lemma:} #1\newline}
+\newcommand{\theorem}[1]{\paragraph{Satz:} #1\newline}
+
+\renewcommand{\mod}{\textbf{ mod }}
+
+\newenvironment{proof}
+    {\textbf{Beweis:}\newline\indent}
+    {\begin{flushright}q.e.d.\end{flushright}}
 
 \begin{document}
     \maketitle
     \tableofcontents
 
     \chapter{Grundbegriffe}
-        \label{c:grundbegriffe}
-
         \section{Aussagen}
-            \label{s:grundbegriffe_aussagen}
-
             Beispiele:
             \begin{itemize}
                 \item $ A _ 1 $: $ 3 $ ist eine gerade Zahl.
@@ -57,8 +68,6 @@
 
 
             \subsection{Aussageformen}
-                \label{ss:grundbegriffe_aussagen_formen}
-
                 Aussagen mit Variablen.
 
                 Beispiele:
@@ -71,8 +80,6 @@
 
 
             \subsection{Quantoren}
-                \label{ss:grundbegriffe_aussagen_quantoren}
-
                 \begin{itemize}
                     \item $ \forall x \in M : E(x) $ - Für alle $ x $ in $ M $ gilt $ E(x) $ wobei $ E $ eine Aussageform darstellt.
                     \item $ \exists x \in M : E(x) $ - Es existiert mindestens ein $ x $ in $ M $ für das gilt $ E(x) $ wobei $ E $ eine Aussageform darstellt.
@@ -86,8 +93,6 @@
                 \end{itemize}
 
             \subsection{Aussagenlogische Verknüpfungen}
-                \label{ss:grundbegriffe_aussagen_verknuepfungen}
-
                 \begin{itemize}
                     \item $ A \land B $ - Konjunktion (und)
                     \item $ A \lor B $ - Disjunktion (oder)
@@ -112,8 +117,6 @@ f       & f     & w             & w             & f             & f             
 
 
                 \subsubsection{de Morgan'schen Regeln}
-                    \label{sss:grundbegriffe_aussagen_verknuepfungen_deMorgan}
-
                     \begin{itemize}
                         \item $ \lnot (A \lor B) \iff \lnot A \land \lnot B $
                         \item $ \lnot (A \land B) \iff \lnot A \lor \lnot B $
@@ -121,8 +124,6 @@ f       & f     & w             & w             & f             & f             
 
 
                 \subsubsection{Distributivgesetz}
-                    \label{sss:grundbegriffe_aussagen_verknuepfungen_distributivgesetz}
-
                     \begin{itemize}
                         \item $ (A \lor B) \land C \iff (A \land C) \lor (B \land C) $
                         \item $ (A \land B) \lor C \iff (A \lor C) \land (B \lor C) $
@@ -131,8 +132,6 @@ f       & f     & w             & w             & f             & f             
 
 
         \section{Mengen}
-            \label{s:grundbegriffe_mengen}
-
             Beispiele:
             \begin{itemize}
                 \item $ \mathbb{N} = \{ 0; 1; ...; n; ... \} $
@@ -142,8 +141,6 @@ f       & f     & w             & w             & f             & f             
             \end{itemize}
 
             \subsection{Formalia}
-                \label{ss:grundbegriffe_mengen_formalia}
-
                 \begin{itemize}
                     \item $ A \subseteq B \equiv \forall x \in A : x \in B $
                     \item $ A = B \equiv (A \subseteq B) \land (B \subseteq A) \equiv \forall x \in M : (x \in A \implies x \in B ) \land (x \in B \implies x \in A) $
@@ -152,31 +149,25 @@ f       & f     & w             & w             & f             & f             
 
 
             \subsection{de'Morganschen Regeln}
-                \label{ss:grundbegriffe_mengen_demorgan}
-
                 \begin{itemize}
                     \item $ (A \cup B) ^ \mathsf{c} = A ^ \mathsf{c} \cap B ^ \mathsf{c} $
                 \end{itemize}
 
 
             \subsection{Kardinalität}
-                \label{ss:grundbegriffe_mengen_kradinalitaet}
-
                 Seien $ A $ und $ B $ endliche Mengen.
 
                 Anzahl der Elemente (Kardinalität): $ \vert A \vert $
 
                 \begin{itemize}
                     \item $ \vert A \cup B \vert = \vert A \vert + \vert B \vert - \vert A \cap B \vert $
-                    \item $ \vert A \times B \vert = \vert A \vert * \vert B \vert $
+                    \item $ \vert A \times B \vert = \vert A \vert \cdot \vert B \vert $
                 \end{itemize}
 
                 $ \vert A \cup B \vert = \vert A \vert + \vert B \vert $ wenn $ A \cap B = \emptyset $
 
 
             \subsection{Operationen}
-                \label{ss:grundbegriffe_mengen_operationen}
-
                 $ M, N \in G $
 
                 \begin{itemize}
@@ -196,16 +187,14 @@ f       & f     & w             & w             & f             & f             
 
 
             \subsection{Obere/Untere Schranken}
-                \label{ss:grundbegriffe_mengen_schranken}
-
                 \begin{itemize}
-                    \item[Obere Schranken:] $ OS(Y) = \{ x \in X : \forall y \in Y : x \geq y \} $
-                    \item[Untere Schranken:] $ US(Y) = \{ x \in X : \forall y \in Y : x \leq y \} $
+                    \item \textbf{Obere Schranken:} $ OS(Y) = \{ x \in X : \forall y \in Y : x \geq y \} $
+                    \item \textbf{Untere Schranken:} $ US(Y) = \{ x \in X : \forall y \in Y : x \leq y \} $
                 \end{itemize}
 
                 \begin{itemize}
-                    \item[Supremum:] Das kleinste Element von $ OS(Y) $ $ \iff sup(Y) $.
-                    \item[Infimum:] Das größte Element von $ US(X) $ $ \iff inf(Y) $.
+                    \item \textbf{Supremum:} Das kleinste Element von $ OS(Y) $ $ \iff sup(Y) $.
+                    \item \textbf{Infimum:} Das größte Element von $ US(X) $ $ \iff inf(Y) $.
                 \end{itemize}
 
 
@@ -213,14 +202,12 @@ f       & f     & w             & w             & f             & f             
                     $ \mathbb{Q} ^ \mathsf{+} = \{ x \in \mathbb{Q} : 0 < x \} $
 
                     \begin{itemize}
-                        \item[Supremum:] Nicht vorhanden.
-                        \item[Infimum:] $ US(\mathbb{Q} ^ \mathsf{+}) = \{ x \in \mathbb{Q} : x \leq 0 \} \implies inf(\mathbb{Q} ^ \mathsf{+}) = 0 $
+                        \item \textbf{Supremum:} Nicht vorhanden.
+                        \item \textbf{Infimum:} $ US(\mathbb{Q} ^ \mathsf{+}) = \{ x \in \mathbb{Q} : x \leq 0 \} \implies inf(\mathbb{Q} ^ \mathsf{+}) = 0 $
                     \end{itemize}
 
 
             \subsection{Relationen}
-                \label{ss:grundbegriffe_mengen_relationen}
-
                 $ R \subseteq A _ 1 \times ... \times A _ n $
 
                 \subsubsection{Relationen von identischen Mengen}
@@ -236,13 +223,11 @@ f       & f     & w             & w             & f             & f             
 
 
                 \subsubsection{Eigenschaften}
-                    \label{sss:grundbegriffe_mengen_relationen_eigenschaften}
-
                     \begin{itemize}
-                        \item[Reflexivität] $ \forall x \in M : xRx $
-                        \item[Symmetrie] $ xRy \implies yRx $
-                        \item[Transivität] $ xRy \land yRz \implies xRz $
-                        \item[Antisymmetrie] $ xRy \land yRx \implies x = y $
+                        \item \textbf{Reflexivität} $ \forall x \in M : xRx $
+                        \item \textbf{Symmetrie} $ xRy \implies yRx $
+                        \item \textbf{Transivität} $ xRy \land yRz \implies xRz $
+                        \item \textbf{Antisymmetrie} $ xRy \land yRx \implies x = y $
                     \end{itemize}
 
                     \begin{itemize}
@@ -253,11 +238,7 @@ f       & f     & w             & w             & f             & f             
 
 
             \subsection{Ordnungsrelationen}
-                \label{ss:grundbegriffe_mengen_ordnungensrelationen}
-
                 \subsubsection{Ordnungstypen}
-                    \label{sss:grundbegriffe_mengen_ordnungensrelationen_typen}
-
                     p.O. $ \coloneqq $ partielle Ordnung
 
                     \begin{itemize}
@@ -267,8 +248,6 @@ f       & f     & w             & w             & f             & f             
 
 
                 \subsubsection{Ordnungsäquivalenz}
-                    \label{sss:grundbegriffe_mengen_ordnungensrelationen_aequivalenz}
-
                     $ (x, R) $ p.O. $ y \subseteq x \implies (y, R \cap (y \times x)) $ p.O.
 
                     \begin{itemize}
@@ -279,8 +258,6 @@ f       & f     & w             & w             & f             & f             
 
 
                 \subsubsection{Extreme}
-                    \label{sss:grundbegriffe_mengen_ordnungensrelationen_extreme}
-
                     $ (x, \leq) $ p.O. $ y \subseteq x $
 
                     \begin{itemize}
@@ -288,20 +265,15 @@ f       & f     & w             & w             & f             & f             
                         \item $ k \in X $ kleinstes Element von $ X $ $ \iff \forall x \in X : x \geq k $
                     \end{itemize}
 
-                    Größe Elemente sind immer eindeutig.
+                    \theorem{Die größten Elemente sind immer eindeutig.}
+                        \begin{proof}
+                            Seien $ g $ und $ g' $ die größten Elemente.
 
-                    \paragraph{Beweis}
-                        Die größten Elemente sind immer eindeutig.
-
-                        Seien $ g $ und $ g' $ die größten Elemente.
-                        $ \implies g \leq g' \land g' \leq g \implies g = g $
-
-                        \qed
+                            \[ \implies g \leq g' \land g' \leq g \implies g = g \]
+                        \end{proof}
 
 
             \subsection{Große Vereinigung/Schittmenge / Leere Menge}
-                \label{ss:grundbegriffe_mengen_grosseVerSchn}
-
                 \subsubsection{Allgemein}
 
                     Allgemein gilt für Teilmengen von Potenzmengen $ Y \subseteq P(M) $:
@@ -322,31 +294,20 @@ f       & f     & w             & w             & f             & f             
 
 
             \subsection{Äquivalenzrelation}
-                \label{ss:grundbegriffe_mengen_aequivalenzrelationen}
+                Seien $ a, b, c, k, l, n \in \mathbb{Z} $.
 
-                Es gilt $ a, b, c, k, l, n \in \mathbb{Z} $.
+                \theorem{$ a \sim _ n b $ genau dann wenn $ \exists k \in \mathbb{Z} : a - b = k \cdot n $}
+                    \begin{proof}
+                        Symmetrie:
+                        \[ a - b = k \cdot n \implies b - a = (-k) \cdot n \]
 
-                $ a \sim _ n b $ genau dann wenn $ \exists k \in \mathbb{Z} : a - b = k * n $
-
-                \paragraph{Beweis}
-                    Symmetrie
-
-                    $ a - b = k * n \implies b - a = (-k) * n $
-
-                    \qed
-
-
-                \paragraph{Beweis}
-                    Transitivität
-
-                    $ a - b = k * n $, $ b - c = l * n \implies a - c = (a - b) + (b - c) = k * n + l * n = (k + l) * n $
-
-                    \qed
+                        Transitivität:
+                        \[ a - b = k \cdot n \]
+                        \[ b - c = l \cdot n \implies a - c = (a - b) + (b - c) = k \cdot n + l \cdot n = (k + l) \cdot n \]
+                    \end{proof}
 
 
             \subsection{Äquivalenzklassen}
-                \label{ss:grundbegriffe_mengen_aequivalenzklassen}
-
                 Es gilt $ (X, R) $, $ a \in X $.
 
                 \begin{itemize}
@@ -357,17 +318,13 @@ f       & f     & w             & w             & f             & f             
                     \item $ \tilde{a} \neq \tilde{b} \implies \tilde{a} \cap \tilde{b} = \emptyset $
                 \end{itemize}
 
-                \paragraph{Beweis}
-                    $ \tilde{a} \neq \tilde{b} \implies \tilde{a} \cap \tilde{b} = \emptyset \equiv \tilde{a} \cap \tilde{b} \neq \emptyset \implies \tilde{a} = \tilde{b} $
-
-                    Sei $ c \in \tilde{a} \cap \tilde{b} $, das heißt $ cRa $ und $ cRb $, also $ a \sim b $ und somit $ \tilde{a} = \tilde{b} $ und somit $ \tilde{a} \neq \tilde{b} \implies \tilde{a} \cap \tilde{b} = \emptyset $.
-
-                    \qed
+                \theorem{$ \tilde{a} \neq \tilde{b} \implies \tilde{a} \cap \tilde{b} = \emptyset \equiv \tilde{a} \cap \tilde{b} \neq \emptyset \implies \tilde{a} = \tilde{b} $}
+                    \begin{proof}
+                        Sei $ c \in \tilde{a} \cap \tilde{b} $, das heißt $ cRa $ und $ cRb $, also $ a \sim b $ und somit $ \tilde{a} = \tilde{b} $ und somit $ \tilde{a} \neq \tilde{b} \implies \tilde{a} \cap \tilde{b} = \emptyset $.
+                    \end{proof}
 
 
             \subsection{Partitionen}
-                \label{ss:grundbegriffe_mengen_partitionen}
-
                 $ P \subseteq P(X) $ ist genau dann eine Partition, wenn:
                 \begin{itemize}
                     \item $ \bigcup P = X $
@@ -375,18 +332,16 @@ f       & f     & w             & w             & f             & f             
                     \item $ \forall S _ 1 S _ 2 \in P : S _ 1 \neq S _ 2 \implies S _ 1 \cap S _ 2 = \emptyset $
                 \end{itemize}
 
-                \textbf{Äquivalenz:} $ x \sim _ p y \iff \exists S \in P : x \in A \land y \in A $
-
-                $ X _ { / _ { P } } = P $
-
-                $ x \sim _ { X _ { / _ { \sim } } } y \iff x \sim y $
-
-                $ \frac{a}{b} \sim \frac{c}{d} \iff a * b \sim c * d $
+                \textbf{Äquivalenz:}
+                \begin{itemize}
+                    \item $ x \sim _ p y \iff \exists S \in P : x \in A \land y \in A $
+                    \item $ X _ { / _ { P } } = P $
+                    \item $ x \sim _ { X _ { / _ { \sim } } } y \iff x \sim y $
+                    \item $ \frac{a}{b} \sim \frac{c}{d} \iff a \cdot b \sim c \cdot d $
+                \end{itemize}
 
 
         \section{Abbildungen/Funktionen}
-            \label{s:grundbegriffe_funktionen}
-
             $ f : A \rightarrow B $ gdw. $ f \subseteq A \times B $, so dass
             \begin{itemize}
                 \item $ xfy \land xfy' \implies y = y' $
@@ -401,8 +356,6 @@ f       & f     & w             & w             & f             & f             
             \end{itemize}
 
             \subsection{Umkehrfunktion (inverse Funktion)}
-                \label{ss:grundbegriffe_funktionen_umkehr}
-
                 \textbf{Vorraussetzung zur Bildung einer inversen Funktion:} Die Funktion muss bijektiv sein.
 
                 Sei $ f : A \rightarrow B $ bijektiv.
@@ -413,16 +366,12 @@ f       & f     & w             & w             & f             & f             
 
 
             \subsection{Identitätsfunktion}
-                \label{ss:grundbegriffe_funktionen_identitaet}
-
                 Sei $ M $ eine Menge.
 
                 Für die Identitätsfunktion gilt: $ id _ M : M \rightarrow M : x \mapsto x $
 
 
             \subsection{Notation}
-                \label{ss:grundbegriffe_funktionen_notation}
-
                 Im allgemeinen gilt $ f : A \rightarrow B : x \mapsto f(x) $. Wobei $ A $ den Definitionsbereich und $ B $ den Wertebereich darstellt.
 
                 Beispiele:
@@ -439,8 +388,6 @@ f       & f     & w             & w             & f             & f             
 
 
             \subsection{Eigenschaften}
-                \label{ss:grundbegriffe_funktionen_eigenschaften}
-
                 \begin{itemize}
                     \item $ f $ ist injektiv, wenn $ \forall x, x' \in A : f(x) = f(x') \implies x = x' $.
                     \item $ f $ ist surjektiv, wenn $ \forall y \in B : \exists x \in A : f(x) = y $.
@@ -451,8 +398,6 @@ f       & f     & w             & w             & f             & f             
 
 
             \subsection{Funktionskomposition}
-                \label{ss:grundbegriffe_funktionen_verkettung}
-
                 Sei $ f : A \rightarrow B $ und $ g : B \rightarrow C $
 
                 Durch die Verkettung entsteht eine neue Funktion: $ g \circ f : A \rightarrow C : x \mapsto g(f(x)) $
@@ -465,65 +410,43 @@ f       & f     & w             & w             & f             & f             
 
 
         \section{Beweisprinzipien}
-            \label{s:grundbegriffe_beweise}
-
             \subsection{Direkter Beweis}
-                \label{ss:grundbegriffe_beweise_direkt}
-
                 Bei einem dirkten Beweis wird die Prämisse direkt bewiesen.
 
                 \subsubsection{Beispiel}
-
-                    Sind $ n, m \in \mathbb{N} $ gerade, dann ist $ n + m $ gerade.
-
-                    \paragraph{Beweis:}
-
-                        Es gilt $ n = 2 * k $ und $ m = 2 * l $, wobei $ k, l \in \mathbb{N} $. Das heißt, dass \[ n + m = 2 * k + 2 * l = 2 * (k + l) \] gerade ist.
-
-                        \qed
+                    \theorem{Sind $ n, m \in \mathbb{N} $ gerade, dann ist $ n + m $ gerade.}
+                        \begin{proof}
+                            Es gilt $ n = 2 \cdot k $ und $ m = 2 \cdot l $, wobei $ k, l \in \mathbb{N} $. Das heißt, dass \[ n + m = 2 \cdot k + 2 \cdot l = 2 \cdot (k + l) \] gerade ist.
+                        \end{proof}
 
 
             \subsection{Beweis durch Kontraposition}
-                \label{ss:grundbegriffe_beweise_kontraposition}
-
                 Anstelle von $ A \implies B $ wird $ \lnot B \implies \lnot A $ bewiesen.
 
                 \subsubsection{Beispiel}
+                    \theorem{Gilt für $ n \in \mathbb{N} $, dass $ n ^ 2 $ gerade ist, ist $ n $ gerade.}
+                        \begin{proof}
+                            Der Beweis wird über $ n $ ungerade $ \implies n ^ 2 $ ungerade geführt.
 
-                    Gilt für $ n \in \mathbb{N} $, dass $ n ^ 2 $ gerade ist, ist $ n $ gerade.
+                            Es gilt für $ k \in \mathbb{N} $, dass $ n = 2 \cdot k + 1 $. Somit gilt dass \[ n ^ 2 = (2 \cdot k + 1) ^ 2 = 4 \cdot k ^ 2 + 4 \cdot k + 1 = 2 \cdot (2 \cdot k ^ 2 + 2 \cdot k) + 1 \] ungerade ist.
 
-                    \paragraph{Beweis:}
-
-                        Der Beweis wird über $ n $ ungerade $ \implies n ^ 2 $ ungerade geführt.
-
-                        Es gilt für $ k \in \mathbb{N} $, dass $ n = 2 * k + 1 $. Somit gilt dass \[ n ^ 2 = (2 * k + 1) ^ 2 = 4 * k ^ 2 + 4 * k + 1 = 2 * (2 * k ^ 2 + 2 * k) + 1 \] ungerade ist.
-
-                        Daraus folgt dass $ n $ ungerade $ \iff n ^ 2 $ ungerade und $ n $ gerade $ \iff n ^ 2 $ gerade.
-
-                        \qed
+                            Daraus folgt dass $ n $ ungerade $ \iff n ^ 2 $ ungerade und $ n $ gerade $ \iff n ^ 2 $ gerade.
+                        \end{proof}
 
 
             \subsection{Indirekter Beweis}
-                \label{ss:grundbegriffe_beweise_indirekt}
-
                 Anstelle von $ A \implies B $ wird $ \lnot (A \land \lnot B) $ bewiesen. Alternativ kann $ \lnot (\lnot A) $ anstelle von $ A $ bewiesen werden ($ \lnot A \implies \bot $).
 
                 \subsubsection{Beispiel}
+                    \theorem{$ \sqrt{2} $ is irrational.}
+                        \begin{proof}
+                            Ist $ \sqrt{2} $ rational, muss \[ \sqrt{2} = \frac{n}{m} \] ($ n, m \in \mathbb{N} $) gelten wobei $ n $ und $ m $ teilerfremd sind. Somit gilt \[ 2 = \frac{n ^ 2}{m ^ 2} \] also \[ n ^ 2 = 2 \cdot m ^ 2 \]. Somit gilt $ n ^ 2 $ gerade $ \implies $ $ n $ gerade. Daraus folgt dass \[ (2 \cdot k) ^ 2 = n ^ 2 = 2 \cdot m ^ 2 \]. Somit gilt $ n ^ 2 $ gerade $ \implies $ $ n $ gerade.
 
-                    $ \sqrt{2} $ is irrational.
-
-                    \paragraph{Beweis:}
-
-                        Ist $ \sqrt{2} $ rational, muss \[ \sqrt{2} = \frac{n}{m} \] ($ n, m \in \mathbb{N} $) gelten wobei $ n $ und $ m $ teilerfremd sind. Somit gilt \[ 2 = \frac{n ^ 2}{m ^ 2} \] also \[ n ^ 2 = 2 * m ^ 2 \]. Somit gilt $ n ^ 2 $ gerade $ \implies $ $ n $ gerade. Daraus folgt dass \[ (2 * k) ^ 2 = n ^ 2 = 2 * m ^ 2 \]. Somit gilt $ n ^ 2 $ gerade $ \implies $ $ n $ gerade.
-
-                        $ \lightning $ $ n $ und $ m $ sollten teilerfremd sein. Somit ist $ \sqrt{2} \neq \frac{n}{m} $.
-
-                        \qed
+                            $ \lightning $ $ n $ und $ m $ sollten teilerfremd sein. Somit ist $ \sqrt{2} \neq \frac{n}{m} $.
+                        \end{proof}
 
 
             \subsection{Beweis durch vollständige Induktion}
-                \label{ss:grundbegriffe_beweise_induktion}
-
                 Es wird beweisen, dass für eine \textit{Induktionshypothese} (\textit{IH}) $ A(n) $ gilt \[ (A(0) \land (\forall n \in \mathbb{N} : A(n) \implies A(n + 1))) \implies \forall n \in \mathbb{N} : A(n) \]
                 Der Beweis von $ A(0) $ wird \textit{Induktionsanfang} (\textit{IA}) genannt.
 
@@ -532,70 +455,201 @@ f       & f     & w             & w             & f             & f             
                 Es gilt: \[ A(0) \implies A(1) \implies A(2) \implies \dots \implies A(n) \]
 
                 \subsubsection{Beispiel 1}
+                    \theorem{$ \forall n \in \mathbb{N} : \sum _ { k = 1 } ^ n k = \frac{n \cdot (n + 1)}{2} $}
+                        \begin{proof}
+                            \textbf{Induktionsanfang:} \[ A(0) = \sum _ { k = 1 } ^ 0 k = \frac{0 \cdot (0 + 1)}{2} = 0 \]
 
-                    \[ \forall n \in \mathbb{N} : \sum _ { k = 1 } ^ n k = \frac{n * (n + 1)}{2} \]
-
-                    \paragraph{Beweis:}
-
-                        Im folgenden wird die Gaußsche Summenformel mit Hilfe der vollständigen Induktion bewiesen.
-
-                        \textbf{Induktionsanfang:} \[ A(0) = \sum _ { k = 1 } ^ 0 k = \frac{0 * (0 + 1)}{2} = 0 \]
-
-                        \textbf{Induktionsschritt:} 
-                        \begin{eqnarray*}
-                            A(n + 1) = \sum _ { k = 1 } ^ { n + 1 } = (\sum _ { k = 1 } ^ n) + (n + 1)
-                                && = \frac{n * (n + 1)}{2} + (n + 1)                                    \\
-                                && = \frac{n + (n + 1)}{2} + \frac{2 * (n + 1)}{2}                      \\
-                                && = \frac{n * (n + 1) + 2 * (n + 1)}{2}                                \\
-                                && = \frac{n ^ 2 + 3 * n + 2}{2}                                        \\
-                                && = \frac{(n + 1) * (n + 2)}{2}                                        \\
-                        \end{eqnarray*}
-
-                        \qed
+                            \textbf{Induktionsschritt:} 
+                            \begin{eqnarray*}
+                                A(n + 1) = \sum _ { k = 1 } ^ { n + 1 } = (\sum _ { k = 1 } ^ n) + (n + 1)
+                                    && = \frac{n \cdot (n + 1)}{2} + (n + 1)                                \\
+                                    && = \frac{n + (n + 1)}{2} + \frac{2 \cdot (n + 1)}{2}                  \\
+                                    && = \frac{n \cdot (n + 1) + 2 \cdot (n + 1)}{2}                        \\
+                                    && = \frac{n ^ 2 + 3 \cdot n + 2}{2}                                    \\
+                                    && = \frac{(n + 1) \cdot (n + 2)}{2}                                    \\
+                            \end{eqnarray*}
+                        \end{proof}
 
 
                 \subsubsection{Beispiel 2}
+                    \theorem{Für endliche Mengen $ M $ gilt $ \vert P(M) \vert = 2 ^ { \vert P(M) \vert } $, also $ \forall n \in \mathbb{N} : \forall M ; \vert M \vert = n \implies \vert P(M) \vert = 2 ^ n $.}
+                        \begin{proof}
+                            \textbf{Induktionsanfang:} \[ \vert M \vert = 0 \implies \vert P(M) \vert = 2 ^ 0 = 1 \]
 
-                    Für endliche Mengen $ M $ gilt $ \vert P(M) \vert = 2 ^ { \vert P(M) \vert } $, also \[ \forall n \in \mathbb{N} : \forall M ; \vert M \vert = n \implies \vert P(M) \vert = 2 ^ n \].
+                            \textbf{Induktionsschritt:} Sei $ M $ eine Menge mit $ \vert M \vert = n + 1 $ wobei $ n \in \mathbb{N} $. Zu zeigen: $ \vert P(M) \vert = 2 ^ { n + 1 } = 2 \cdot 2 ^ n $.
 
-                    \paragraph{Beweis:}
+                            Sei $ a \in M $.
 
-                        Im folgenden wird oben genannte Prämisse mit Hilfe der vollständigen Induktion bewiesen.
+                            \begin{itemize}
+                                \item $ S _ 0 = \{ A \in P(M) : a \in A \} \implies \vert S _ 0 \vert = n $
+                                \item $ S _ 1 = \{ A \in P(M) : a \not\in A \} \implies \vert S _ 1 \vert = n $
+                            \end{itemize}
 
-                        \textbf{Induktionsanfang:} \[ \vert M \vert = 0 \implies \vert P(M) \vert = 2 ^ 0 = 1 \]
+                            \[ S _ 0 \approx P(M \setminus \{ a \}) \approx S _1 \]
 
-                        \textbf{Induktionsschritt:} Sei $ M $ eine Menge mit $ \vert M \vert = n + 1 $ wobei $ n \in \mathbb{N} $. Zu zeigen: $ \vert P(M) \vert = 2 ^ { n + 1 } = 2 * 2 ^ n $.
-
-                        Sei $ a \in M $.
-
-                        \begin{itemize}
-                            \item $ S _ 0 = \{ A \in P(M) : a \in A \} \implies \vert S _ 0 \vert = n $
-                            \item $ S _ 1 = \{ A \in P(M) : a \not\in A \} \implies \vert S _ 1 \vert = n $
-                        \end{itemize}
-
-                        \[ S _ 0 \approx P(M \setminus \{ a \}) \approx S _1 \]
-
-                        \[ \vert P(M) \vert = \vert S _ 0 \vert + \vert S _ 1 \vert = 2 * \vert P(M \setminus \{ a \}) \vert = 2 * 2 ^ n = 2 ^ { n + 1 } \]
-
-                        \qed
-
+                            \[ \vert P(M) \vert = \vert S _ 0 \vert + \vert S _ 1 \vert = 2 \cdot \vert P(M \setminus \{ a \}) \vert = 2 \cdot 2 ^ n = 2 ^ { n + 1 } \]
+                        \end{proof}
 
 
     \chapter{Algebraische Strukturen}
-        \label{c:strukturen}
-
         Strukturen, in denen man "`wie üblich"' rechnen kann.
 
         \section{Rechnen in $ \mathbb{Z} $ - Primzahlen, Teiler}
-            \label{s:strukturen_rechnen}
-
             Seien $ a, b \in \mathbb{Z} $.
 
             \begin{itemize}
-                \item $ b \mid a \equiv \exists c \in \mathbb{Z} : b * c = a \equiv $ $ b $ teilt $ a $.
+                \item $ b \mid a \equiv \exists c \in \mathbb{Z} : b \cdot c = a \equiv $ $ b $ teilt $ a $.
                 \item $ p \in \mathbb{N} $ ist prim $ \iff (p > 1) \land (\forall n \in \mathbb{N} : n \mid p \implies (n = 1 \lor n = p)) $
-                \item $ ggt(a, b) = max(\{ n \in \mathbb{N} : n \mid a \land n \mid b \}) $
+                \item $ ggt(a, b) = max \{ n \in \mathbb{N} : n \mid a \land n \mid b \} $
             \end{itemize}
 
-            Sei $ a \in \mathbb{Z} $ und $ b \in \mathbb[N*] $, dann existieren eindeutige $ q \in \mathbb{Z} $ und $ r \in \{ 0, 1, \dots, b - 1 \} $ mit $ a = q * b + r $ wobei $ q = \lfloor \frac{a}{b} \rfloor $ und $ r = a \mod b $.
+            \theorem{Sei $ a, b \in \mathbb{Z*} $, dann gibt es eindeutige $ q \in \mathbb{Z} $ und $ r \in \{ 0, 1, \dots, b - 1 \} $, so dass $ a = q \cdot b + r $, $ q = \lfloor \frac{a}{b} \rfloor $ und $ r = a \mod b $}
+                \begin{proof}
+                    Sei $ q = max \{ s \in \mathbb{Z} : s \cdot b \leq a \} $ und $ r = a - q \cdot b $.
+
+                    \textbf{Eindeutigkeit:}
+                    Sei $ a = q' \cdot b + r' $ und $ r' \in \{ 0, 1, \dots, b - 1 \} $, so folgt $ (q - q') \cdot b = r' - r $ und $ \vert r - r' \vert < b $.
+
+                    \[ \implies q - q' = 0 \implies q = q' \]
+                    \[ \implies r' - r = 0 \implies r = r' \]
+                \end{proof}
+
+
+            \subsection{Modulare Arithmetik (Rechnen mit Restklassen)}
+                Sei $ n \in \mathbb{N*} $ und $ a, b \in \mathbb{Z} $, dann gilt für $ k \in \mathbb{N} $:
+                \begin{itemize}
+                    \item $ (a + b) \mod n = ((a \mod n) + (b \mod n)) \mod n $
+                    \item $ (a \cdot b) \mod n = ((a \mod n) \cdot (b \mod n)) \mod n $
+                    \item $ a ^ k \mod n = (a \mod n) ^ k \mod n $
+                \end{itemize}
+
+                \theorem{$ (a + b) \mod n = ((a \mod n) + (b \mod n)) \mod n $}
+                    \begin{proof}
+                        Sei $ q _ 1 = \lfloor \frac{a}{n} \rfloor $, $ r _ 1 = a \mod n $ und $ q _ 2 = \lfloor \frac{b}{n} \rfloor $, $ r _ 2 = b \mod n $, dann gilt:
+
+                        \begin{eqnarray*}
+                                 a + b
+                            && = (q _ 1 n + r _ 1) + (q _ 2 n + r _ 2)      \\
+                            && = n (q _ 1 + q _ 2) + r _ 1 + r _ 2          \\
+                            && \implies (a + b) \sim _ n (r _ 1 + r _ 2)    \\
+                        \end{eqnarray*}
+                    \end{proof}
+
+
+                \theorem{$ (a \cdot b) \mod n = ((a \mod n) \cdot (b \mod n)) \mod n $}
+                    \begin{proof}
+                        Sei $ q _ 1 = \lfloor \frac{a}{n} \rfloor $, $ r _ 1 = a \mod n $ und $ q _ 2 = \lfloor \frac{b}{n} \rfloor $, $ r _ 2 = b \mod n $, dann gilt:
+
+                        \begin{eqnarray*}
+                                 a \cdot b
+                            && = (q _ 1 \cdot n + r _ 1) (q _ 2 \cdot n + r _ 2)                                                            \\
+                            && = q _ 1 \cdot q _ 2 \cdot n ^ 2 + q _ 1 \cdot n \cdot r _ 2 + q _ 2 \cdot n \cdot r _ 1 + r _ 1 \cdot r _ 2  \\
+                            && = n \cdot (q _ 1 \cdot q _ 2 \cdot n + q _ 1 \cdot r _ 2 + q _ 2 \cdot r _ 1) + r _ 1 \cdot r _ 2            \\
+                            && \implies (a \cdot b) \sim _ n (r _ 1 \cdot r _ 2)                                                            \\
+                        \end{eqnarray*}
+                    \end{proof}
+
+
+                \theorem{$ a ^ k \mod n = (a \mod n) ^ k \mod n $}
+                    \begin{proof}
+                        \textbf{Induktionsanfang:} $ k = 0 $, $ n > 1 $
+                        \[ a ^ 0 \mod n = 1 = (a \mod n) ^ 0 \mod n = 1 \]
+
+                        \textbf{Induktionsschritt:}
+                        \begin{eqnarray*}
+                               a ^ { k + 1 } \mod n
+                            && = ((a ^ k \mod n) \cdot (a \mod n)) \mod n                   \\
+                            && = (((a \mod n) ^ k \mod n) \cdot ((a \mod n) \mod n)) \mod n \\
+                            && = ((a \mod n) ^ k \cdot (a \mod n)) \mod n                   \\
+                            && = (a \mod n) ^ { k + 1 } \mod n                              \\
+                        \end{eqnarray*}
+                    \end{proof}
+
+
+            \subsection{Größter gemeinsamter Teiler}
+                Definition: $ ggt(a, b) \coloneqq max \{ n \in \mathbb{N} : n \vert a \land n \vert b \} $
+
+                Ferner gilt $ ggt \equiv ggT $.
+
+                \lemma{$ a, b \in \mathbb{N} $, $ a \geq b $ gilt $ ggt(a, b) = ggt(b, a \mod b) $}
+                \begin{proof}
+                    Sei $ r = a \mod b $
+                    \[ (n \vert a) \land (n \vert b) \iff (n \vert b) \land (n \vert r) \]
+
+                    \textbf{$ \implies $: } Sei $ a = k \cdot n $ und $ q = l \cdot n $, so gilt:
+
+                    $ r = a - q \cdot b = k \cdot n - q \cdot l \cdot n = n \cdot (k - q \cdot l) \implies n \vert r $
+
+                    \vspace{10px}
+
+                    \textbf{$ \impliedby $: } Sei $ b = k \cdot n $ und $ r = l \cdot n $, so gilt:
+
+                    $ a = q \cdot b + r = q \cdot k \cdot n + l \cdot n = n \cdot (q \cdot k + l) \implies n \vert a $
+                \end{proof}
+
+
+                \subsubsection{Euklidischer Algorithmus}
+                    Der euklidische Algorithmus ist ein Algorithmus zur berechnung des größten gemeinsamen Teilers ($ ggt(a, b) $) zweier Zahlen.
+
+                    Für alle $ a, b \in \mathbb{N} $, $ a \geq b $ gilt:
+                    \begin{algorithmic}
+                        \Function{ggt}{$ a $, $ b $}
+                            \If{$ b = 0 $}
+                                \State \Return $ a $
+                            \Else
+                                \State \Return \Call{ggt}{$ b $, $ a \mod b $}
+                            \EndIf
+                        \EndFunction
+                    \end{algorithmic}
+
+
+                \subsubsection{Erweiterter euklidischer Algorithmus}
+                    Der erweiterte euklidische Algorithmus dient zur von $ k $ und $ l $ in $ \exists k, l \in \mathbb{Z} : ggt(a, b) = k \cdot a + l \cdot b $.
+
+                    $ eggt : \mathbb{N} \times \mathbb{N} \rightarrow \mathbb{N} \times \mathbb{Z} \times \mathbb{Z} $
+
+                    \begin{algorithmic}
+                        \Function{eggt}{$ a $, $ b $}
+                            \If{$ b = 0 $}
+                                \State \Return $ (a, 1, 0) $
+                            \Else
+                                \State $ (d, x, y) \gets $ \Call{eggt}{$ b $, $ a \mod b $}
+                                \State \Return $ (d, y, x - floor(a / b) * y) $
+                            \EndIf
+                        \EndFunction
+                    \end{algorithmic}
+
+                    \theorem{$ \exists k, l \in \mathbb{Z} : ggt(a, b) = k \cdot a + l \cdot b $}
+                        \begin{proof}
+                            \textbf{TODO: Understand this proof!}
+
+                            Seien $ a, b, x, y \in \mathbb{Z} $ und $ d \in \mathbb{N} $, so gilt
+                            \[ a \geq b \land (d, x, y) = eggt(a, b) \implies d = ggt(a, b) = x \cdot a + y \cdot b \]
+
+                            $ eggt(a, 0) = (a, 1, 0) \implies a = ggt(a, 0) \land a = 1 \cdot a + 0 \cdot b $
+
+                            $ d = ggt(b, a \mod b) = x \cdot b + y \cdot (a \mod b) = ggt(a, b) $
+
+                            \begin{eqnarray*}
+                                     ggt(a, b)
+                                && = y \cdot a + (x - \lfloor \frac{a}{b} \rfloor) \cdot b                  \\
+                                && = c \cdot b + y \cdot a - y \cdot (\lfloor \frac{a}{b} \rfloor \cdot b)  \\
+                                && = x \cdot b + y \cdot (a - \lfloor \frac{a}{b} \rfloor \cdot b)          \\
+                                && = x \cdot b + y \cdot (a \mod b)                                         \\
+                                && = ggt(b, a \mod b)                                                       \\
+                                && = ggt(a, b)                                                              \\
+                            \end{eqnarray*}
+                        \end{proof}
+
+
+                    \corollary{$ ggt(a, b) = 1 \implies \exists x, y \in \mathbb{Z} : 1 = y \cdot a \land y \cdot b $}
+
+                    \theorem{Wenn $ ggt(a, n) = 1 $ , dann $ (n \vert a \cdot b \implies n \vert b) $ für $ a, b, n \in \mathbb{N*} $}
+                    \begin{proof}
+                        Seien $ x, y \in \mathbb{Z} $.
+
+                        $ 1 = ggt(a, n) = x \cdot a + y \cdot n \iff b = x \cdot a \cdot b + y \cdot n \cdot b $
+
+                        $ \implies n \vert b $
+                    \end{proof}
 \end{document}
